@@ -26,7 +26,7 @@ npm start
 
 ## 教程地址
 
-1. [GraphQL使用指南(开始)](https://github.com/zhouyuexie/learn-graphql/blob/mutation/GraphQL%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97-%E5%BC%80%E5%A7%8B.md)
-2. [GraphQL使用指南(Mutaions)](https://github.com/zhouyuexie/learn-graphql/blob/mutation/GraphQL%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97-%E4%BF%AE%E6%94%B9.md)
-3. [GraphQL使用指南-查询.md	](https://github.com/zhouyuexie/learn-graphql/blob/mutation/GraphQL%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97-%E6%9F%A5%E8%AF%A2.md)
-4. [GraphQL使用指南-高级部分.md	](https://github.com/zhouyuexie/learn-graphql/blob/mutation/GraphQL%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97-%E9%AB%98%E7%BA%A7%E9%83%A8%E5%88%86.md)
+1. [GraphQL使用指南(开始)](https://github.com/zhouyuexie/learn-graphql/blob/master/GraphQL%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97-%E5%BC%80%E5%A7%8B.md)
+2. [GraphQL使用指南(Mutaions)](https://github.com/zhouyuexie/learn-graphql/blob/master/GraphQL%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97-%E4%BF%AE%E6%94%B9.md)
+3. [GraphQL使用指南-查询.md	](https://github.com/zhouyuexie/learn-graphql/blob/master/GraphQL%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97-%E6%9F%A5%E8%AF%A2.md)
+4. [GraphQL使用指南-高级部分.md	](https://github.com/zhouyuexie/learn-graphql/blob/master/GraphQL%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97-%E9%AB%98%E7%BA%A7%E9%83%A8%E5%88%86.md)
