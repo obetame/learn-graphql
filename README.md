@@ -26,3 +26,4 @@ npm start
 
 ## 教程地址
 
+1. [GraphQL使用指南(开始)](https://github.com/zhouyuexie/learn-graphql/blob/mutation/GraphQL%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97(%E5%BC%80%E5%A7%8B).md)
