@@ -116,14 +116,59 @@ const Query = new GraphQLObjectType({
         nameKey:{type:GraphQLString}
       },
       resolve:(source,{nameKey})=>{
-        return [_.find(AddressList,item=>item.ShortKey.toLowerCase()===nameKey.toLowerCase())]
+        return [_.find(AddressList,item=>item.ShortKey===nameKey.toUpperCase())]
       }
     }
   })
 });
 
+const Mutation = new GraphQLObjectType({
+  name:"Mutation",
+  description:"增删改数据",
+  fields:()=>({
+    createAddress:{
+      type:AddressContent,
+      args:{
+        Id:{
+          type:new GraphQLNonNull(GraphQLInt)
+        },
+        Code:{
+          type:new GraphQLNonNull(GraphQLString)
+        },
+        Name:{
+          type:new GraphQLNonNull(GraphQLString)
+        },
+        FirstStr:{
+          type:new GraphQLNonNull(GraphQLString)
+        }
+      },
+      resolve:(source,args)=>{
+        let address = Object.assign({},args);//获取数据
+        
+        //改为大写
+        address.FirstStr = address.FirstStr.toUpperCase();
+
+        let queryData = _.find(AddressList,item=>item.ShortKey===address.FirstStr);//查找的数据
+        
+        //检测是否存在FirstStr开头的
+        if(queryData){
+          // 有这个数据
+          //存储数据
+          queryData.Content.push(address);
+          // console.log(address)
+          return address;//返回新存储的数据
+        }
+        else{
+          return null;
+        }
+      }
+    }
+  })
+})
+
 const Schema = new GraphQLSchema({
   query: Query,
+  mutation:Mutation
 });
 
 module.exports = Schema;
