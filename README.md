@@ -13,7 +13,7 @@ git clone https://github.com/zhouyuexie/learn-graphql
 2. 安装依赖:
 
 ```shell
-cd learn-graphql && npm install
+cd learn-graphql && git checkout mutation && npm install
 ```
 
 3. 运行:
