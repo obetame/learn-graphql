@@ -1,12 +1,13 @@
 const {
   GraphQLList,
+  GraphQLInterfaceType,
   GraphQLObjectType,
   GraphQLSchema,
   GraphQLString,
   GraphQLInt,
   GraphQLFloat,
   GraphQLEnumType,
-  GraphQLNonNull
+  GraphQLNonNull,
 } = require('graphql');
 
 const _ = require("underscore");
@@ -17,13 +18,13 @@ const AddressList = require("./data/address");
 
 const Post = new GraphQLObjectType({
   name:"Post",
-  description:"一个文章",
+  description:"一篇文章",
   fields:()=>({
     _id:{
-      type:new GraphQLNonNull(GraphQLString)
+      type:new GraphQLNonNull(GraphQLString),//不允许为空
     },
     title:{
-      type:new GraphQLNonNull(GraphQLString)
+      type:new GraphQLNonNull(GraphQLString),//不允许为空
     },
     category:{
       type:GraphQLString
@@ -69,8 +70,9 @@ const Address = new GraphQLObjectType({
         limit:{type:GraphQLInt}
       },
       resolve:(source,{limit})=>{
-        // console.log(source);
+        // console.log(source);//返回的是address查询得到的值
         if(limit){
+          //如果有限制结果数
           return _.first(source.Content,limit);
         }
         else{
@@ -81,20 +83,25 @@ const Address = new GraphQLObjectType({
   })
 });
 
+// 查询根目录(关于查询的动作都需要在这里声明)
 const Query = new GraphQLObjectType({
   name: 'BlogSchema',
   description: 'Root of the Blog Schema',
   fields: () => ({
+    // 回应查询
     echo: {
       type: GraphQLString,
       description: '回应你输入的内容',
+      // 参数定义
       args: {
         message: {type: GraphQLString}
       },
-      resolve: function(source, {message}) {
+      resolve: function(source, {message},request) {
+        console.log("it:",it);
         return `hello: ${message}`;
       }
     },
+    // 文章查询
     posts:{
       type:new GraphQLList(Post),
       args:{
@@ -104,26 +111,74 @@ const Query = new GraphQLObjectType({
         return [PostsList[args.index]]
       }
     },
+    // 文章查询(不需要参数)
     postsnoargs:{
       type:new GraphQLList(Post),
       resolve:(source)=>{
         return [PostsList[0]]
       }
     },
+    // 地址查询
     address:{
       type:new GraphQLList(Address),
       args:{
         nameKey:{type:GraphQLString}
       },
       resolve:(source,{nameKey})=>{
-        return [_.find(AddressList,item=>item.ShortKey.toLowerCase()===nameKey.toLowerCase())]
+        return [_.find(AddressList,item=>item.ShortKey===nameKey.toUpperCase())]
       }
     }
   })
 });
 
+// 操作根目录(关于操作的动作都需要在这里声明)
+const Mutation = new GraphQLObjectType({
+  name:"Mutation",
+  description:"增删改数据",
+  fields:()=>({
+    createAddress:{
+      type:AddressContent,
+      args:{
+        Id:{
+          type:new GraphQLNonNull(GraphQLInt)
+        },
+        Code:{
+          type:new GraphQLNonNull(GraphQLString)
+        },
+        Name:{
+          type:new GraphQLNonNull(GraphQLString)
+        },
+        FirstStr:{
+          type:new GraphQLNonNull(GraphQLString)
+        }
+      },
+      resolve:(source,args)=>{
+        let address = Object.assign({},args);//获取数据
+        
+        //改为大写
+        address.FirstStr = address.FirstStr.toUpperCase();
+
+        let queryData = _.find(AddressList,item=>item.ShortKey===address.FirstStr);//查找的数据
+        
+        //检测是否存在FirstStr开头的
+        if(queryData){
+          // 有这个数据
+          //存储数据
+          queryData.Content.push(address);
+          // console.log(address)
+          return address;//返回新存储的数据
+        }
+        else{
+          return null;
+        }
+      }
+    }
+  })
+})
+
 const Schema = new GraphQLSchema({
   query: Query,
+  mutation:Mutation
 });
 
 module.exports = Schema;
