@@ -1,4 +1,4 @@
-# GraphQL使用指南(查询)
+# GraphQL使用指南(开始)
 
 > 本指南是基于JavaScript的实现.
 
