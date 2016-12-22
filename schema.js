@@ -97,7 +97,6 @@ const Query = new GraphQLObjectType({
         message: {type: GraphQLString}
       },
       resolve: function(source, {message},request) {
-        console.log("it:",it);
         return `hello: ${message}`;
       }
     },
