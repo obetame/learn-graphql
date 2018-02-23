@@ -1,6 +1,6 @@
 # learn-graphql
 
-> 本教材服务器基于`express`,`express-graphql`,`graphql`.
+> 本教程中的服务器基于`express`,`express-graphql`,`graphql`.
 
 ## 开始
 
