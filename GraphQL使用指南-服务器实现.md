@@ -2,7 +2,7 @@
 
 > 在之前的几篇教程中,我们讲的是如何查询和Mutation操作,这些都是在客户端那边所进行的,那么服务器这边是如何处理这些请求的呢?这就是这篇教程所要说的东西了.
 
-## 准备工作
+### 准备工作
 
 1. 克隆库:
 
@@ -28,7 +28,7 @@ npm start
 
 > 以下教程的代码都在`schema.js`文件中.
 
-## 类型
+### 类型
 
 GraphQL中有对应JavaScript的类型:
 
@@ -46,7 +46,7 @@ GraphQLNonNull,//不允许为空类型,接受一个graphql类型
 
 还有一些比如`GraphQLInputType`等等这类不常用的类型,限于篇幅,我们这里就不做过多的介绍,有兴趣的读者可以去Google一下.
 
-## 查询热身
+### 查询热身
 
 打开`http://localhost:12580/graphql`后在左边输入:
 
@@ -119,7 +119,7 @@ const Query = new GraphQLObjectType({
 }
 ```
 
-## 查询
+### 查询
 
 > 有人说上面那个根本不算是查询,这个确实,但是入门一个教程没有人一开始就打击你对吧,下面就是一个更高级点的查询,更加接近 "现实生活" .
 
@@ -129,23 +129,23 @@ const Query = new GraphQLObjectType({
 
 ```js
 const Post = new GraphQLObjectType({
-  name:"Post",
-  description:"一篇文章",
+  name: "Post",
+  description: "一篇文章",
   fields:()=>({
-    _id:{
-      type:new GraphQLNonNull(GraphQLString),//不允许为空
+    _id: {
+      type: new GraphQLNonNull(GraphQLString),//不允许为空
     },
-    title:{
-      type:new GraphQLNonNull(GraphQLString),//不允许为空
+    title: {
+      type: new GraphQLNonNull(GraphQLString),//不允许为空
     },
-    category:{
-      type:GraphQLString
+    category: {
+      type: GraphQLString
     },
-    layout:{
-      type:GraphQLString
+    layout: {
+      type: GraphQLString
     },
-    content:{
-      type:GraphQLString
+    content: {
+      type: GraphQLString
     },
   })
 });
@@ -163,15 +163,15 @@ const Query = new GraphQLObjectType({
   fields: () => ({
     // 回应查询
     echo: {
-    	// ...
+      // ...
     },
     // 文章查询
-    posts:{
-      type:new GraphQLList(Post),
+    posts: {
+      type: new GraphQLList(Post),
       args:{
-        index:{type:GraphQLInt}
+        index: { type:GraphQLInt }
       },
-      resolve:(source,args)=>{
+      resolve: (source, args) => {
         return [PostsList[args.index]],//返回数组(虽然只有一个)
       }
     }
@@ -185,7 +185,7 @@ const Query = new GraphQLObjectType({
 
 **有时候你需要嵌套几个`GraphQLObjectType`来得到自己想要的数据格式,比如项目中的schema.js定义了一个地址查询,定义了三层查询.**
 
-## Mutation
+### Mutation
 
 > 客户端查询数据的时候有时候是也伴随着修改数据和创建数据,所以这里也要介绍一下如果操作更新数据.
 
@@ -193,7 +193,7 @@ const Query = new GraphQLObjectType({
 
 ```js
 mutation CREATE{
-  createAddress(Id:1,Code:"13156",Name:"信息价",FirstStr:"S"){
+  createAddress(Id:1, Code:"13156", Name:"信息价", FirstStr:"S"){
     Id,
     Name,
     Code,
@@ -212,33 +212,33 @@ mutation CREATE{
 ```js
 // 操作根目录(关于操作的动作都需要在这里声明)
 const Mutation = new GraphQLObjectType({
-  name:"Mutation",
-  description:"增删改数据",
-  fields:()=>({
-    createAddress:{
+  name: "Mutation",
+  description: "增删改数据",
+  fields:() => ({
+    createAddress: {
       type:AddressContent,
-      args:{
-        Id:{
+      args: {
+        Id: {
           type:new GraphQLNonNull(GraphQLInt)
         },
-        Code:{
+        Code: {
           type:new GraphQLNonNull(GraphQLString)
         },
-        Name:{
+        Name: {
           type:new GraphQLNonNull(GraphQLString)
         },
-        FirstStr:{
+        FirstStr: {
           type:new GraphQLNonNull(GraphQLString)
         }
       },
-      resolve:(source,args)=>{
-        let address = Object.assign({},args);//获取数据
-        
+      resolve: (source,args) => {
+        let address = Object.assign({}, args);//获取数据
+
         //改为大写
         address.FirstStr = address.FirstStr.toUpperCase();
 
         let queryData = _.find(AddressList,item=>item.ShortKey===address.FirstStr);//查找的数据
-        
+
         //检测是否存在FirstStr开头的
         if(queryData){
           // 有这个数据
@@ -246,8 +246,7 @@ const Mutation = new GraphQLObjectType({
           queryData.Content.push(address);
           // console.log(address)
           return address;//返回新存储的数据
-        }
-        else{
+        } else{
           return null;
         }
       }
@@ -256,8 +255,7 @@ const Mutation = new GraphQLObjectType({
 })
 ```
 
-## 数据库
+### 数据库
 
 数据库不打算专门写一篇了,其实也就是将查询和修改数据库的操作放在`resolve`函数里操作就行了.
-
 

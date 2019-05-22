@@ -1,8 +1,8 @@
 # GraphQL使用指南(查询)
 
-> Graphql 为查询而生,所以我们首先试试它的查询功能吧.
+> Graphql 为查询而生,核心是定制化查询自己所需要的数据,所以我们首先试试它的查询功能吧.
 
-## 准备工作
+### 准备工作
 
 1. 克隆库:
 
@@ -26,13 +26,13 @@ npm start
 
 ![](http://ww3.sinaimg.cn/large/006y8lVagw1facg09cnhlj30v20ow40r.jpg)
 
-## GraphQL 初试
+### GraphQL 初试
 
 在左边窗口输入以下内容:
 
 ```js
 {
-	echo(message:"world")
+  echo(message:"world")
 }
 ```
 
@@ -52,7 +52,7 @@ npm start
 
 你可以看到上面那行`echo(message:String):String`,说明echo接受一个message的参数,并且返回一个string类型的数据,点击echo你可以看到更详细的内容.
 
-## 有参数查询
+### 有参数查询
 
 > 上面 `echo` 只是一个简单的演示,并没有查询字段,现在我们开始根据客户端的要求返回定制的数据吧.
 
@@ -62,7 +62,7 @@ npm start
 
 ```js
 {
-  posts(index:1){
+  posts(index:1) {
     _id,
     title,
     content
@@ -86,13 +86,13 @@ npm start
 }
 ```
 
-## 无参数查询
+### 无参数查询
 
 目前为止我们的查询都需要一个参数,毕竟查询的时候大多数都是需要参数的,现在我们来试试一个不需要参数的例子.
 
 ```js
 {
-  postsnoargs{
+  postsnoargs {
     _id,
     title,
     content
@@ -102,7 +102,7 @@ npm start
 
 好了,执行一下吧!你会发现没什么不同,就是服务器返回的数据是"固定"的而已,对于获取一些首页这类数据我们不需要给定参数是非常有用的.
 
-## 嵌套查询
+### 嵌套查询
 
 有时候我们需要对查询到的数据进行筛选,比如限制大小,这时候就需要一个嵌套查询来实现这个功能了.
 
@@ -110,9 +110,9 @@ npm start
 
 ```js
 {
-  address(nameKey:"A"){
+  address(nameKey: "A") {
     ShortKey,
-    Content(limit:5) {
+    Content(limit: 5) {
       Id,
       Code,
       Name,
@@ -170,13 +170,13 @@ npm start
 
 其中的`Content`字段加上了限制返回前五个市的信息,注意其中的limit是服务器设置的,并不是Graphql的关键字.
 
-## 多种查询混合
+### 多种查询混合
 
 这其实很简单,也就是将上面的几个查询混合写到一起就可以了:
 
 ```js
 {
-  address(nameKey:"A"){
+  address(nameKey:"A") {
     ShortKey,
     Content(limit:2) {
       Id,
@@ -185,8 +185,8 @@ npm start
       FirstStr
     }
   },
-  
-  posts(index:1){
+
+  posts(index:1) {
     _id,
     title
   }
@@ -199,7 +199,7 @@ npm start
 {
   "data": {
     "address": [
-      {
+        {
         "ShortKey": "A",
         "Content": [
           {
@@ -218,7 +218,7 @@ npm start
       }
     ],
     "posts": [
-      {
+        {
         "_id": "03390abb5570ce03ae524397d215713b",
         "title": "New Feature: Tracking Error Status with Kadira"
       }
@@ -227,16 +227,16 @@ npm start
 }
 ```
 
-## 查询别名
+### 查询别名
 
 有时候我们想这样查找使数据分开,方便自己各个地方调用:
 
 ```js
 {
-  postsnoargs{
+  postsnoargs {
     title
   },
-  postsnoargs{
+  postsnoargs {
     _id
   }
 }
@@ -248,14 +248,14 @@ npm start
 {
   "data": {
     "postsnoargs": {
-    		"title":[
-    			"title": "Sharing the Meteor Login State Between Subdomains",
-    		],
-    		"_id":[
-    			"_id": "0176413761b289e6d64c2c14a758c1c7"
-    		]
+      "title": [
+        "title": "Sharing the Meteor Login State Between Subdomains",
+      ],
+      "_id": [
+       "_id": "0176413761b289e6d64c2c14a758c1c7"
+      ]
     }
-   }
+  }
 }
 ```
 
@@ -278,10 +278,10 @@ npm start
 
 ```js
 {
-  posttitle:postsnoargs{
+  posttitle:postsnoargs {
     title
   },
-  postid:postsnoargs{
+  postid:postsnoargs {
     _id
   }
 }
@@ -308,8 +308,6 @@ npm start
 
 ![](http://ww1.sinaimg.cn/large/006y8lVagw1facj8uzam0j30uz0bv77h.jpg)
 
-## 总结
+### 总结
 
-以上就是你使用Graphql查询所需要知道的,下面我们开始介绍Mutations.
-
-
+以上就是你使用Graphql查询所需要知道的内容,后面我将开始介绍Mutations操作.

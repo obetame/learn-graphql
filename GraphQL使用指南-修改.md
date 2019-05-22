@@ -1,4 +1,4 @@
-## GraphQL使用指南(Mutaions)
+# GraphQL使用指南(Mutaions)
 
 > Mutations(突变) 不知道怎么翻译比较好,暂时直接英文吧(可以理解为增删改).
 

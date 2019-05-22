@@ -1,8 +1,8 @@
-## GraphQL使用指南(高级部分)
+# GraphQL使用指南(高级部分)
 
-> 只要你看完了前面的查询和Mutation基本上就已经满足你的日常使用了,但是我们不能止步于此是吧,还有更美好的世界等着我们!
+> 虽然不一定能使用到这些方法,但是了解一下也许后面遇到的需求刚好可以可以用上,增加了陪女朋友的时间呢!
 
-## 分片
+### 分片
 
 > 在 GraphQL 中,分片是一段能够复用的片段.
 
@@ -10,17 +10,17 @@
 
 ```js
 {
-  first:posts(index:1){
+  first:posts(index:1) {
     title,
     category,
     layout
   },
-  second:posts(index:2){
+  second:posts(index:2) {
     title,
     category,
     layout
   },
-  third:posts(index:3){
+  third:posts(index:3) {
     title,
     category,
     layout
@@ -48,18 +48,18 @@ fragment post on Post{
 
 ```js
 {
-  first:posts(index:1){
+  first:posts(index:1) {
     ...post
   },
-  second:posts(index:2){
+  second:posts(index:2) {
     ...post
   },
-  third:posts(index:3){
+  third:posts(index:3) {
     ...post
   }
 }
 
-fragment post on Post{
+fragment post on Post {
   title,
   category,
   layout
@@ -72,20 +72,20 @@ fragment post on Post{
 
 ```js
 {
-  first:posts(index:1){
+  first:posts(index:1) {
     ...post
   },
-  second:posts(index:2){
+  second:posts(index:2) {
     ...post,
     category
   },
-  third:posts(index:3){
+  third:posts(index:3) {
     ...post,
     layout
   }
 }
 
-fragment post on Post{
+fragment post on Post {
   title,
   category,
 }
@@ -93,11 +93,11 @@ fragment post on Post{
 
 看起来一点问题都没有,服务器返回了正确的信息,这些我就不解释了,都是一些ES6的东西,如果你不懂ES6那么要抓紧时间了.
 
-## 分片总结
+### 分片总结
 
 分片也可以嵌套分片,所以只要是服务器定义过的数据类型,你都可以写成一个个的分片,这种模式能大量减少你写重复代码的时间.
 
-## 查询变量
+### 查询变量
 
 > 正如上面所说的,分片可以减少大量的时间,那么现在我准备说的查询变量就可以增加你生命(好吧我承认我在瞎扯).
 
@@ -122,30 +122,32 @@ fragment post on Post{
 
 ```js
 {
-	"index":1
+  "index":1
 }
 ```
 
 这就是一个简单的变量查询,也可以和分片一起使用,你可以增加几个变量增加使用分片:
 
 ```js
-query getFewPosts($index: Int!,
+query getFewPosts(
+  $index: Int!,
   $index1: Int!,
-  $index2: Int!) {
-  first:posts(index:$index){
+  $index2: Int!
+) {
+  first:posts(index:$index) {
     ...post
   },
-  second:posts(index:$index1){
+  second:posts(index:$index1) {
     ...post,
     category
   },
-  third:posts(index:$index2){
+  third:posts(index:$index2) {
     ...post,
     layout
   }
 }
 
-fragment post on Post{
+fragment post on Post {
   title,
   category,
 }
@@ -163,8 +165,6 @@ fragment post on Post{
 
 ![](http://ww3.sinaimg.cn/large/006y8lVagw1facmao3hrsj30v50jcgol.jpg)
 
-## 总结
+### 总结
 
-这部分都是讲的客户端,下面开始讲服务器这部分,我们使用express搭建讲解.
-
-
+这部分都是讲的客户端,后面开始使用express搭建服务器去探索后端的实现.
