@@ -1,4 +1,4 @@
-# GraphQL使用指南(高级部分)
+# GraphQL 使用指南(高级部分)
 
 > 虽然不一定能使用到这些方法,但是了解一下也许后面遇到的需求刚好可以可以用上,增加了陪女朋友的时间呢!
 
@@ -28,7 +28,7 @@
 }
 ```
 
-我们将上面的posts查询进行了一遍又一遍,开始你可能觉得没什么,但是当需要查询的数据有几十个字段的时候你会开始头疼(相信我).
+我们将上面的 posts 查询进行了一遍又一遍,开始你可能觉得没什么,但是当需要查询的数据有几十个字段的时候你会开始头疼(相信我).
 
 那么我们有什么方法可以复用这一块经常用到的片段呢?
 
@@ -66,7 +66,7 @@ fragment post on Post {
 }
 ```
 
-使用了对象展开符`...`,如果你了解ES6的话你肯定对这个特别的熟悉,那么我们是不是可以试试ES6类似的特性?
+使用了对象展开符`...`,如果你了解 ES6 的话你肯定对这个特别的熟悉,那么我们是不是可以试试 ES6 类似的特性?
 
 那我们来试试:
 
@@ -91,7 +91,7 @@ fragment post on Post {
 }
 ```
 
-看起来一点问题都没有,服务器返回了正确的信息,这些我就不解释了,都是一些ES6的东西,如果你不懂ES6那么要抓紧时间了.
+看起来一点问题都没有,服务器返回了正确的信息,这些我就不解释了,都是一些 ES6 的东西,如果你不懂 ES6 那么要抓紧时间了.
 
 ### 分片总结
 
@@ -101,7 +101,7 @@ fragment post on Post {
 
 > 正如上面所说的,分片可以减少大量的时间,那么现在我准备说的查询变量就可以增加你生命(好吧我承认我在瞎扯).
 
-对于上面的那个带参数的查询操作,我们查询了`index`等于1,2,3时候的数据,分片减少了你输入相同字段的时间,而查询变量减少了你写分片的时间...
+对于上面的那个带参数的查询操作,我们查询了`index`等于 1,2,3 时候的数据,分片减少了你输入相同字段的时间,而查询变量减少了你写分片的时间...
 
 废话补多少,先看代码:
 
@@ -167,4 +167,16 @@ fragment post on Post {
 
 ### 总结
 
-这部分都是讲的客户端,后面开始使用express搭建服务器去探索后端的实现.
+这部分都是讲的客户端,后面开始使用 express 搭建服务器去探索后端的实现.
+
+## 教程地址
+
+1. [GraphQL 使用指南-开始](https://github.com/zhouyuexie/learn-graphql/blob/master/GraphQL%E4%BD%BF%E7%94%A8%E6%8C%87%E5
+%8D%97-%E5%BC%80%E5%A7%8B.md)
+2. [GraphQL 使用指南-查询.md](https://github.com/zhouyuexie/learn-graphql/blob/master/GraphQL%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97-%E6%9F%A5%E8%AF%A2.md)
+3. [GraphQL 使用指南-修改.md](https://github.com/zhouyuexie/learn-graphql/blob/master/GraphQL%E4%BD%BF%E7%94%A8%E6%8C%87
+%E5%8D
+%97-%E4%BF%AE%E6%94%B9.md)
+4. [GraphQL 使用指南-高级部分.md](https://github.com/zhouyuexie/learn-graphql/blob/master/GraphQL%E4%BD%BF%E7%94%A8%E6%8C%87
+%E5%8D%97-%E9%AB%98%E7%BA%A7%E9%83%A8%E5%88%86.md)
+5. [GraphQL 使用指南-服务器实现.md](https://github.com/zhouyuexie/learn-graphql/blob/master/GraphQL使用指南-服务器实现.md)
