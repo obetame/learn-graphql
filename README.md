@@ -1,6 +1,6 @@
 # learn-graphql
 
-> 本教程中的服务器基于`express`,`express-graphql`,`graphql`.
+> 本教程中的服务器基于`express`，30分钟速通Graphql
 
 ## 开始
 
@@ -20,9 +20,13 @@ cd learn-graphql && npm install
 
 ```shell
 npm start
+# 或者
+npm run dev
 ```
 
 现在打开你的浏览器输入`http://localhost:12580/graphql`,或者[点击这里](http://localhost:12580/graphql).
+
+然后按以下顺序开始学习吧！
 
 ## 教程地址
 
