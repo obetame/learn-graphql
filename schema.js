@@ -150,45 +150,43 @@ const Query = new GraphQLObjectType({
 
 const Mutation = new GraphQLObjectType({
 	name: 'MutationSchema',
-	description: '增删改数据',
+	description: '增删改地址信息',
 	fields: () => ({
 		createAddress: {
 			type: AddressContent,
 			args: {
 				Id: {
 					type: GraphQLNonNull(GraphQLInt),
+          description: '地址Id'
 				},
 				Code: {
 					type: GraphQLNonNull(GraphQLString),
 				},
 				Name: {
 					type: GraphQLNonNull(GraphQLString),
+					description: '城市名称'
 				},
 				FirstStr: {
 					type: GraphQLNonNull(GraphQLString),
+					description: '城市名称首字母'
 				},
 			},
 			resolve: (source, args) => {
-				let address = Object.assign({}, args); //获取数据
+				let address = Object.assign({}, args);
 
-				//改为大写
 				address.FirstStr = address.FirstStr.toUpperCase();
 
 				let queryData = _.find(
 					AddressList,
 					item => item.ShortKey === address.FirstStr
-				); //查找的数据
+				);
 
-				//检测是否存在FirstStr开头的
 				if (queryData) {
-					// 有这个数据
-					//存储数据
 					queryData.Content.push(address);
-					// console.log(address)
-					return address; //返回新存储的数据
-				} else {
-					return null;
+					return address;
 				}
+
+				return null;
 			},
 		},
 	}),
