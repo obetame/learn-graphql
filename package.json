@@ -1,33 +1,35 @@
 {
-  "name": "learn-graphql",
-  "version": "1.0.0",
-  "description": "learn graphql",
-  "main": "index.js",
-  "scripts": {
-    "start": "node ./index.js",
-    "dev": "nodemon ./index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/zhouyuexie/learn-graphql.git"
-  },
-  "keywords": [
-    "learn",
-    "graphql"
-  ],
-  "author": "zhouyuexie",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/zhouyuexie/learn-graphql/issues"
-  },
-  "homepage": "https://github.com/zhouyuexie/learn-graphql#readme",
-  "dependencies": {
-    "express": "^4.17.1",
-    "express-graphql": "^0.9.0",
-    "graphql": "^15.1.0",
-    "underscore": "^1.10.2"
-  },
-  "devDependencies": {
-    "nodemon": "^1.19.1"
-  }
+	"name": "learn-graphql",
+	"version": "1.0.0",
+	"description": "learn graphql",
+	"main": "index.js",
+	"scripts": {
+		"start": "node ./index.js",
+		"format": "prettier --config .prettierrc --write '*.js'",
+		"dev": "nodemon ./index.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/zhouyuexie/learn-graphql.git"
+	},
+	"keywords": [
+		"learn",
+		"graphql"
+	],
+	"author": "zhouyuexie",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/zhouyuexie/learn-graphql/issues"
+	},
+	"homepage": "https://github.com/zhouyuexie/learn-graphql#readme",
+	"dependencies": {
+		"express": "^4.17.1",
+		"express-graphql": "^0.9.0",
+		"graphql": "^15.1.0",
+		"underscore": "^1.10.2"
+	},
+	"devDependencies": {
+		"nodemon": "^1.19.1",
+		"prettier": "2.0.5"
+	}
 }
