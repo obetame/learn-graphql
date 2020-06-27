@@ -2,9 +2,9 @@
 
 > Graphql的高级部分虽然平时可能用的并不多，但是有些时候可以提升我们的开发效率，减少重复代码
 
-### 分片
+## 分片
 
-> 分片是一段能够复用的片段
+> 分片(Fragment)是一段能够复用的片段
 
 如果我们需要查询三个不同文章的信息，那么我们可能会做如下的查询:
 
@@ -86,11 +86,13 @@ fragment post on Post {
 
 分片可以进行嵌套，所以只要是服务器定义过的数据类型，你都可以定义成分片进行使用，这种模式能大量减少你写重复代码的时间.
 
-### 定义变量
+分片还有内联分片(Inline Fragments)，可以点击[这里查看](https://graphql.cn/learn/queries/#inline-fragments)
+
+## 使用变量
 
 很多时候我们查询的条件是一样的，如果每一次都重复的写代码去查询，那效率是非常低的，而且没法根据代码判断条件来进行查询
 
-因此Graphql提供了变量，类似于可以定义一个函数，传递不同的参数进行查询：
+因此Graphql提供了`query`关键字来定义一块类似于函数的`field`，`$size`参数是可选的，默认值为5：
 
 ```
 query findFirstPagePost($size: Int = 5) {
@@ -147,6 +149,53 @@ query takeThreePostWithIds(
   "thirdId": "0be4bea0330ccb5ecf781a9f69a64bc8"
 }
 ```
+
+## 指令
+
+> 在上面的例子中我们使用variables可以进行动态查询，还有一种情况我们也是需要动态的修改查询内容，比如说部分UI组件需要一些简略信息，而另一些需要详情信息
+
+我们进行如下的查询城市信息：
+
+```
+query findFirstPagePost {
+  findCityByKey(nameKey: "Z") {
+    ShortKey
+    Content(limit: 4) {
+      Name
+      Code
+      Id
+    }
+  }
+}
+```
+
+但是我们突然有另一个需求是只需要他们的`Name`，其它的并不需要：
+
+```
+query findFirstPagePost($withOther: Boolean!) {
+  findCityByKey(nameKey: "Z") {
+    ShortKey
+    Content(limit: 4) {
+      Name
+      Code @include(if: $withOther)
+      Id @include(if: $withOther)
+    }
+  }
+}
+```
+
+![directives](/images/query_with_directives.png)
+
+除了`@include(if: Boolean)`之外还有
+
+- `@include(if: Boolean)`：为true的时候返回内容里才会有这个值
+- `@skip(if: Boolean)`：为true的时候跳过显示这个字段
+
+这两个是Graphql提供的执行，你还可以自定义指令
+
+## 元字段
+
+通过使用`__typename`来获取服务器的`field`查询返回的值是什么类型
 
 ## 教程地址
 
