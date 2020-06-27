@@ -1,6 +1,6 @@
 # GraphQL 使用指南(高级部分)
 
-> Graphql的高级部分虽然平时可能用的并不多，但是有些时候可以提升我们的开发效率，减少重复代码
+> Graphql 的高级部分虽然平时可能用的并不多，但是有些时候可以提升我们的开发效率，减少重复代码
 
 ## 分片
 
@@ -59,7 +59,7 @@ fragment post on Post {
 }
 ```
 
-使用了对象展开符`...`，类似于ES6的解构特性，还可以在使用的时候增加`subField`：
+使用了对象展开符`...`，类似于 ES6 的解构特性，还可以在使用的时候增加`subField`：
 
 那我们来试试:
 
@@ -92,7 +92,7 @@ fragment post on Post {
 
 很多时候我们查询的条件是一样的，如果每一次都重复的写代码去查询，那效率是非常低的，而且没法根据代码判断条件来进行查询
 
-因此Graphql提供了`query`关键字来定义一块类似于函数的`field`，`$size`参数是可选的，默认值为5：
+因此 Graphql 提供了`query`关键字来定义一块类似于函数的`field`，`$size`参数是可选的，默认值为 5：
 
 ```
 query findFirstPagePost($size: Int = 5) {
@@ -107,7 +107,7 @@ query findFirstPagePost($size: Int = 5) {
 
 ```json
 {
-  "size": 3
+	"size": 3
 }
 ```
 
@@ -144,15 +144,15 @@ query takeThreePostWithIds(
 
 ```json
 {
-  "firstId": "0176413761b289e6d64c2c14a758c1c7",
-  "secondId": "03390abb5570ce03ae524397d215713b",
-  "thirdId": "0be4bea0330ccb5ecf781a9f69a64bc8"
+	"firstId": "0176413761b289e6d64c2c14a758c1c7",
+	"secondId": "03390abb5570ce03ae524397d215713b",
+	"thirdId": "0be4bea0330ccb5ecf781a9f69a64bc8"
 }
 ```
 
 ## 指令
 
-> 在上面的例子中我们使用variables可以进行动态查询，还有一种情况我们也是需要动态的修改查询内容，比如说部分UI组件需要一些简略信息，而另一些需要详情信息
+> 在上面的例子中我们使用 variables 可以进行动态查询，还有一种情况我们也是需要动态的修改查询内容，比如说部分 UI 组件需要一些简略信息，而另一些需要详情信息
 
 我们进行如下的查询城市信息：
 
@@ -188,10 +188,10 @@ query findFirstPagePost($withOther: Boolean!) {
 
 除了`@include(if: Boolean)`之外还有
 
-- `@include(if: Boolean)`：为true的时候返回内容里才会有这个值
-- `@skip(if: Boolean)`：为true的时候跳过显示这个字段
+- `@include(if: Boolean)`：为 true 的时候返回内容里才会有这个值
+- `@skip(if: Boolean)`：为 true 的时候跳过显示这个字段
 
-这两个是Graphql提供的执行，你还可以自定义指令
+这两个是 Graphql 提供的执行，你还可以自定义指令
 
 ## 元字段
 
@@ -199,12 +199,8 @@ query findFirstPagePost($withOther: Boolean!) {
 
 ## 教程地址
 
-1. [GraphQL 使用指南-开始](https://github.com/zhouyuexie/learn-graphql/blob/master/GraphQL%E4%BD%BF%E7%94%A8%E6%8C%87%E5
-%8D%97-%E5%BC%80%E5%A7%8B.md)
+1. [GraphQL 使用指南-开始](https://github.com/zhouyuexie/learn-graphql/blob/master/GraphQL%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97-%E5%BC%80%E5%A7%8B.md)
 2. [GraphQL 使用指南-查询.md](https://github.com/zhouyuexie/learn-graphql/blob/master/GraphQL%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97-%E6%9F%A5%E8%AF%A2.md)
-3. [GraphQL 使用指南-修改.md](https://github.com/zhouyuexie/learn-graphql/blob/master/GraphQL%E4%BD%BF%E7%94%A8%E6%8C%87
-%E5%8D
-%97-%E4%BF%AE%E6%94%B9.md)
-4. [GraphQL 使用指南-高级部分.md](https://github.com/zhouyuexie/learn-graphql/blob/master/GraphQL%E4%BD%BF%E7%94%A8%E6%8C%87
-%E5%8D%97-%E9%AB%98%E7%BA%A7%E9%83%A8%E5%88%86.md)
+3. [GraphQL 使用指南-修改.md](https://github.com/zhouyuexie/learn-graphql/blob/master/GraphQL%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97-%E4%BF%AE%E6%94%B9.md)
+4. [GraphQL 使用指南-高级部分.md](https://github.com/zhouyuexie/learn-graphql/blob/master/GraphQL%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97-%E9%AB%98%E7%BA%A7%E9%83%A8%E5%88%86.md)
 5. [GraphQL 使用指南-服务器实现.md](https://github.com/zhouyuexie/learn-graphql/blob/master/GraphQL使用指南-服务器实现.md)
