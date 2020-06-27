@@ -354,6 +354,30 @@ _`echo`并不是 Graphql 提供的语法，它是后端定义的一个类似于�
 }
 ```
 
+对于字段名也可以自定义名称，比如：
+
+```
+{
+  myPost: findPostById(id: "0176413761b289e6d64c2c14a758c1c7") {
+    title
+    id: _id
+  }
+}
+```
+
+得到：
+
+```json
+{
+  "data": {
+    "myPost": {
+      "title": "Sharing the Meteor Login State Between Subdomains",
+      "id": "0176413761b289e6d64c2c14a758c1c7"
+    }
+  }
+}
+```
+
 ### 定义变量
 
 很多时候我们查询的条件是一样的，如果每一次都重复的写代码去查询，那效率是非常低的，而且没法根据代码判断条件来进行查询
