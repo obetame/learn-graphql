@@ -378,31 +378,6 @@ _`echo`并不是 Graphql 提供的语法，它是后端定义的一个类似于�
 }
 ```
 
-### 定义变量
-
-很多时候我们查询的条件是一样的，如果每一次都重复的写代码去查询，那效率是非常低的，而且没法根据代码判断条件来进行查询
-
-因此Graphql提供了变量，类似于可以定义一个函数，传递不同的参数进行查询：
-
-```
-query findFirstPagePost($size: Int = 5) {
-  findPosts(page: 1, size: $size) {
-    title
-    layout
-  }
-}
-```
-
-然后我们打开左下角的`Query Variables`输入框输入以下内容，由于`$size`具有默认值，因此也可以不传递参数：
-
-```json
-{
-  "size": 3
-}
-```
-
-![Query Post By Variables](/images/query_post_by_variables.png)
-
 ### 总结
 
 以上就是你使用 Graphql 查询所需要知道的内容,后面我将开始介绍 Mutations 操作.

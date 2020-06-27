@@ -1,173 +1,152 @@
 # GraphQL 使用指南(高级部分)
 
-> 虽然不一定能使用到这些方法,但是了解一下也许后面遇到的需求刚好可以可以用上,增加了陪女朋友的时间呢!
+> Graphql的高级部分虽然平时可能用的并不多，但是有些时候可以提升我们的开发效率，减少重复代码
 
 ### 分片
 
-> 在 GraphQL 中,分片是一段能够复用的片段.
+> 分片是一段能够复用的片段
 
-如果我们需要查询三个不同文章的信息,那么我们可能会做如下的查询:
+如果我们需要查询三个不同文章的信息，那么我们可能会做如下的查询:
 
-```js
+```
 {
-  first:posts(index:1) {
-    title,
-    category,
-    layout
-  },
-  second:posts(index:2) {
-    title,
-    category,
-    layout
-  },
-  third:posts(index:3) {
-    title,
-    category,
-    layout
+  firstPost: findPostById(id: "0176413761b289e6d64c2c14a758c1c7") {
+    title
+    id: _id
+  }
+  secondPost: findPostById(id: "03390abb5570ce03ae524397d215713b") {
+    title
+    id: _id
+  }
+  thirdPost: findPostById(id: "0be4bea0330ccb5ecf781a9f69a64bc8") {
+    title
+    id: _id
   }
 }
 ```
 
-我们将上面的 posts 查询进行了一遍又一遍,开始你可能觉得没什么,但是当需要查询的数据有几十个字段的时候你会开始头疼(相信我).
+可以看到我们查询 posts 一遍又一遍，一个好的程序员应该遵循一个规则："Don't repeat yourself"，尽量避免写重复的代码，否则后期难以维护、重构困难
 
-那么我们有什么方法可以复用这一块经常用到的片段呢?
+那么我们有什么方法可以复用这一块经常用到的片段呢？我们可以使用`Graphql`中的`fragment`：
 
-接下来我来给你答案:
-
-```js
-fragment post on Post{
-  title,
-  category,
-  layout
-}
 ```
-
-上面的就是一个分片,`Post`是一个已经服务器定义好的类型,你可以看右上角的文档,每个操作名称的后面都会有一个返回的类型.
-
-下面我们就开始使用这个分片:
-
-```js
-{
-  first:posts(index:1) {
-    ...post
-  },
-  second:posts(index:2) {
-    ...post
-  },
-  third:posts(index:3) {
-    ...post
-  }
-}
-
 fragment post on Post {
-  title,
-  category,
-  layout
+  title
+  id: _id
 }
 ```
 
-使用了对象展开符`...`,如果你了解 ES6 的话你肯定对这个特别的熟悉,那么我们是不是可以试试 ES6 类似的特性?
+上面的就是一个分片，`Post`是一个`findPostById`返回值的类型，你可以在右上角的文档中查找到它的定义
+
+我们使用这个`fragment`来复用需要使用的属性，下面我们就开始使用这个分片:
+
+```
+fragment post on Post {
+  title
+  id: _id
+}
+
+{
+  firstPost: findPostById(id: "0176413761b289e6d64c2c14a758c1c7") {
+    ...post
+  }
+  secondPost: findPostById(id: "03390abb5570ce03ae524397d215713b") {
+    ...post
+  }
+  thirdPost: findPostById(id: "0be4bea0330ccb5ecf781a9f69a64bc8") {
+    ...post
+  }
+}
+```
+
+使用了对象展开符`...`，类似于ES6的解构特性，还可以在使用的时候增加`subField`：
 
 那我们来试试:
 
-```js
+```
+fragment post on Post {
+  title
+  id: _id
+}
+
 {
-  first:posts(index:1) {
+  firstPost: findPostById(id: "0176413761b289e6d64c2c14a758c1c7") {
     ...post
-  },
-  second:posts(index:2) {
-    ...post,
+    layout
+  }
+  secondPost: findPostById(id: "03390abb5570ce03ae524397d215713b") {
+    ...post
     category
-  },
-  third:posts(index:3) {
-    ...post,
+  }
+  thirdPost: findPostById(id: "0be4bea0330ccb5ecf781a9f69a64bc8") {
+    ...post
+  }
+}
+```
+
+分片可以进行嵌套，所以只要是服务器定义过的数据类型，你都可以定义成分片进行使用，这种模式能大量减少你写重复代码的时间.
+
+### 定义变量
+
+很多时候我们查询的条件是一样的，如果每一次都重复的写代码去查询，那效率是非常低的，而且没法根据代码判断条件来进行查询
+
+因此Graphql提供了变量，类似于可以定义一个函数，传递不同的参数进行查询：
+
+```
+query findFirstPagePost($size: Int = 5) {
+  findPosts(page: 1, size: $size) {
+    title
     layout
   }
 }
-
-fragment post on Post {
-  title,
-  category,
-}
 ```
 
-看起来一点问题都没有,服务器返回了正确的信息,这些我就不解释了,都是一些 ES6 的东西,如果你不懂 ES6 那么要抓紧时间了.
+然后我们打开左下角的`Query Variables`输入框输入以下内容，由于`$size`具有默认值，因此也可以不传递参数：
 
-### 分片总结
-
-分片也可以嵌套分片,所以只要是服务器定义过的数据类型,你都可以写成一个个的分片,这种模式能大量减少你写重复代码的时间.
-
-### 查询变量
-
-> 正如上面所说的,分片可以减少大量的时间,那么现在我准备说的查询变量就可以增加你生命(好吧我承认我在瞎扯).
-
-对于上面的那个带参数的查询操作,我们查询了`index`等于 1,2,3 时候的数据,分片减少了你输入相同字段的时间,而查询变量减少了你写分片的时间...
-
-废话补多少,先看代码:
-
-```js
-query getFewPosts($index: Int!) {
-  first:posts(index:$index){
-    ...post
-  }
-}
-
-fragment post on Post{
-  title,
-  category,
-}
-```
-
-然后在查询窗口中输入:
-
-```js
+```json
 {
-  "index":1
+  "size": 3
 }
 ```
 
-这就是一个简单的变量查询,也可以和分片一起使用,你可以增加几个变量增加使用分片:
+![Query Post By Variables](/images/query_post_by_variables.png)
 
-```js
-query getFewPosts(
-  $index: Int!,
-  $index1: Int!,
-  $index2: Int!
+我们还可以与分片一起使用：
+
+```
+fragment post on Post {
+  title
+  id: _id
+}
+
+query takeThreePostWithIds(
+  $firstId: ID
+  $secondId: ID
+  $thirdId: ID
 ) {
-  first:posts(index:$index) {
+  firstPost: findPostById(id: $firstId) {
     ...post
-  },
-  second:posts(index:$index1) {
-    ...post,
-    category
-  },
-  third:posts(index:$index2) {
-    ...post,
     layout
   }
-}
-
-fragment post on Post {
-  title,
-  category,
+  secondPost: findPostById(id: $secondId) {
+    ...post
+    category
+  }
+  thirdPost: findPostById(id: $thirdId) {
+    ...post
+  }
 }
 ```
 
-然后在查询窗口中输入:
+并在`Query Variables`中输入：
 
-```js
+```json
 {
-  "index": 1,
-  "index1": 2,
-  "index2": 3
+  "firstId": "0176413761b289e6d64c2c14a758c1c7",
+  "secondId": "03390abb5570ce03ae524397d215713b",
+  "thirdId": "0be4bea0330ccb5ecf781a9f69a64bc8"
 }
 ```
-
-![](http://ww3.sinaimg.cn/large/006y8lVagw1facmao3hrsj30v50jcgol.jpg)
-
-### 总结
-
-这部分都是讲的客户端,后面开始使用 express 搭建服务器去探索后端的实现.
 
 ## 教程地址
 
