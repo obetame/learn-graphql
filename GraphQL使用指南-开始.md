@@ -4,7 +4,7 @@
 
 ### 介绍
 
-`GraphQL` 是一个 Facebook 于 2012 开发出来且 2015 开源的应用层的查询语言,你需要在后台定义一个基于 GraphQL 的图形模式,然后你的客户端就可以查询他们想要的数据,而不需要后台重新定义一个接口返回你需要的数据.
+`GraphQL` 是一个 Facebook 于 2012 开发出来且 2015 开源的应用层的查询语言,你需要在后端定义一个基于 GraphQL 的图形模式,然后你的客户端就可以查询他们想要的数据,而不需要后端重新定义一个接口返回你需要的数据.
 
 ![graphql介绍](http://ww3.sinaimg.cn/large/006y8lVagw1face0i49unj31kw0wxmzx.jpg)
 
@@ -12,16 +12,16 @@ Graphql 不需要更改、新增后端 API 来获取数据,因此这种方式比
 
 我们来看看简单的 GraphQL 查询:
 
-```js
+```
 {
   post {
-    title,
-    content,
+    title
+    content
     author {
       name
-    },
+    }
     comments {
-      content,
+      content
       author {
         name
       }
@@ -30,28 +30,28 @@ Graphql 不需要更改、新增后端 API 来获取数据,因此这种方式比
 }
 ```
 
-后台返回的数据:
+后端返回的数据:
 
-```js
+```json
 {
-  data:{
-    post:{
-      title: "query data",
-      content: "query data",
-      author: {
-        name: "query data"
+  "data":{
+    "post":{
+      "title": "query data",
+      "content": "query data",
+      "author": {
+        "name": "query data"
       },
-      comments: [
+      "comments": [
         {
-          content: "query data",
-          author: {
-            name: "query data"
+          "content": "query data",
+          "author": {
+            "name": "query data"
           }
         },
         {
-          content: "query data",
-          author: {
-            name: "query data"
+          "content": "query data",
+          "author": {
+            "name": "query data"
           }
         }
       ]
@@ -83,6 +83,6 @@ Graphql 不需要更改、新增后端 API 来获取数据,因此这种方式比
 ### 资料
 
 1. [From REST to GraphQL](https://0x2a.sh/from-rest-to-graphql-b4e95e94c26b#.o5wtsc878)
-2. [learngraphql](https://learngraphql.com)
+2. [learn graphql](https://learngraphql.com)
 3. [Facebook GraphQL](https://facebook.github.io/graphql/)
 4. [awesome-graphql](https://github.com/chentsulin/awesome-graphql)
