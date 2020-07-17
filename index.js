@@ -12,6 +12,13 @@ app.use(
 	})
 );
 
-app.listen(12580);
-console.log('please open http://localhost:12580/graphql');
+const port = process.argv[2];
+if (port == undefined) {
+	console.log("Error: port not defined, use 'npm start port' to define server port");
+	console.log();
+	process.exit();
+}
+
+app.listen(port);
+console.log('Info: url: http://localhost:' + port + '/graphql');
 // 请打开 http://localhost:12580/graphql
