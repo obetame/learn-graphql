@@ -5,6 +5,7 @@ const {
 	GraphQLString,
 	GraphQLInt,
 	GraphQLFloat,
+	GraphQLBoolean,
 	GraphQLEnumType,
 	GraphQLID,
 	GraphQLNonNull,
@@ -154,6 +155,7 @@ const Mutation = new GraphQLObjectType({
 	fields: () => ({
 		createAddress: {
 			type: AddressContent,
+			description: '根据参数新增一个城市',
 			args: {
 				Id: {
 					type: GraphQLNonNull(GraphQLInt),
@@ -187,6 +189,76 @@ const Mutation = new GraphQLObjectType({
 				}
 
 				return null;
+			},
+		},
+		deleteAddressById: {
+			type: GraphQLBoolean,
+			description: '根据地址Id删除城市',
+			args: {
+				Id: {
+					type: GraphQLNonNull(GraphQLInt),
+					description: '地址Id'
+				}
+			},
+			resolve: (source, { Id }) => {
+
+				let deleteStatus = false;
+				AddressList.forEach(
+					addressGroup => {
+						addressGroup.Content.forEach(
+							address => {
+								if (address.Id == Id) {
+									let index = addressGroup.Content.indexOf(address);
+									addressGroup.Content.splice(index, 1);
+									deleteStatus = true;
+								}
+							}
+						)
+					}
+				)
+
+				return deleteStatus;
+			},
+		},
+		updateAddressById: {
+			type: GraphQLBoolean,
+			description: '根据地址Id更改城市信息',
+			args:{
+				Id: {
+					type: GraphQLNonNull(GraphQLInt),
+					description: '地址Id'
+				},
+				Code: {
+					type: GraphQLNonNull(GraphQLString),
+				},
+				Name: {
+					type: GraphQLNonNull(GraphQLString),
+					description: '城市名称'
+				},
+				FirstStr: {
+					type: GraphQLNonNull(GraphQLString),
+					description: '城市名称首字母'
+				},
+
+			},
+			resolve: (source, args) => {
+				let updateStatus = false;
+				AddressList.forEach(
+					addressGroup => {
+						addressGroup.Content.forEach(
+							address => {
+								if (address.Id == args.Id) {
+									address.Code = args.Code;
+									address.Name = args.Name;
+									address.FirstStr = args.FirstStr;
+									updateStatus = true;
+								}
+							}
+						)
+					}
+				)
+
+				return updateStatus;
 			},
 		},
 	}),
