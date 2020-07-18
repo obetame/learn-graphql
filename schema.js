@@ -91,7 +91,7 @@ const Query = new GraphQLObjectType({
 			args: {
 				message: { type: GraphQLString },
 			},
-			resolve: function(source, { message }) {
+			resolve: function (source, { message }) {
 				return `hello: ${message}`;
 			},
 		},
@@ -159,7 +159,7 @@ const Mutation = new GraphQLObjectType({
 			args: {
 				Id: {
 					type: GraphQLNonNull(GraphQLInt),
-          description: '地址Id'
+					description: '地址Id'
 				},
 				Code: {
 					type: GraphQLNonNull(GraphQLString),
@@ -202,28 +202,24 @@ const Mutation = new GraphQLObjectType({
 			},
 			resolve: (source, { Id }) => {
 
-				let deleteStatus = false;
-				AddressList.forEach(
-					addressGroup => {
-						addressGroup.Content.forEach(
-							address => {
-								if (address.Id == Id) {
-									let index = addressGroup.Content.indexOf(address);
-									addressGroup.Content.splice(index, 1);
-									deleteStatus = true;
-								}
-							}
-						)
+				for (i = 0; i < AddressList.length; i++) {
+					let AddressGroup = AddressList[i];
+					for (j = 0; j < AddressGroup.Content.length; j++) {
+						let address = AddressGroup.Content[j];
+						if (address.Id == Id) {
+							AddressGroup.Content.splice(j, 1);
+							return true;
+						}
 					}
-				)
+				}
 
-				return deleteStatus;
+				return false;
 			},
 		},
 		updateAddressById: {
 			type: GraphQLBoolean,
 			description: '根据地址Id更改城市信息',
-			args:{
+			args: {
 				Id: {
 					type: GraphQLNonNull(GraphQLInt),
 					description: '地址Id'
@@ -242,23 +238,21 @@ const Mutation = new GraphQLObjectType({
 
 			},
 			resolve: (source, args) => {
-				let updateStatus = false;
-				AddressList.forEach(
-					addressGroup => {
-						addressGroup.Content.forEach(
-							address => {
-								if (address.Id == args.Id) {
-									address.Code = args.Code;
-									address.Name = args.Name;
-									address.FirstStr = args.FirstStr;
-									updateStatus = true;
-								}
-							}
-						)
-					}
-				)
 
-				return updateStatus;
+				for (i = 0; i < AddressList.length; i++) {
+					let AddressGroup = AddressList[i];
+					for (j = 0; j < AddressGroup.Content.length; j++) {
+						let address = AddressGroup.Content[j];
+						if (address.Id == args.Id) {
+							address.Code = args.Code;
+							address.Name = args.Name;
+							address.FirstStr = args.FirstStr;
+							return true;
+						}
+					}
+				}
+
+				return false;
 			},
 		},
 	}),
