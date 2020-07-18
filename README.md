@@ -18,13 +18,30 @@ cd learn-graphql && npm install
 
 3. 运行:
 
+运行前可以通过设定环境变量`PORT`来修改端口号(可跳过):
+
+```shell
+# Windows cmd
+set PORT=8080
+# Windows powershell
+$env:PORT=8080
+# Linux
+export PORT=8080
+# MacOS
+export PORT=8080
+```
+
+然后，通过以下命令运行:
+
 ```shell
 npm start
 # 或者
 npm run dev
 ```
 
-现在打开你的浏览器输入`http://localhost:12580/graphql`,或者[点击这里](http://localhost:12580/graphql).
+现在打开你的浏览器输入`http://localhost:12580/graphql`,或者[点击这里](http://localhost:12580/graphql). 如果改了端口号请自行打开对应链接.
+
+
 
 然后按以下顺序开始学习吧！
 
