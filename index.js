@@ -12,6 +12,13 @@ app.use(
 	})
 );
 
-app.listen(12580);
-console.log('please open http://localhost:12580/graphql');
-// 请打开 http://localhost:12580/graphql
+const port = process.env.PORT;
+
+if (port == undefined) {
+	app.listen(12580);
+	console.info('url: http://localhost:12580/graphql');
+	// 请打开 http://localhost:12580/graphql
+} else {
+	app.listen(port);
+	console.info('url: http://localhost:' + port + '/graphql');
+}
