@@ -23,7 +23,7 @@
 	},
 	"homepage": "https://github.com/zhouyuexie/learn-graphql#readme",
 	"dependencies": {
-		"express": "^4.17.1",
+		"express": "^4.17.3",
 		"express-graphql": "^0.9.0",
 		"graphql": "^15.1.0",
 		"underscore": "^1.10.2"
